@@ -110,6 +110,8 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
     * *Resposta à Pergunta 4 (parcial).*
 4.  **Análise de Distribuição:** Histogramas para entender o perfil da amostra (ex: a maioria das pessoas dorme pouco ou muito?).
 
+
+
 ---
 
 ## 6. Autoavaliação e Conclusão
@@ -118,10 +120,12 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 * (Espaço reservado para descrever se as hipóteses foram confirmadas. Ex: "Foi observado uma correlação forte de 0.7 entre tempo de tela e estresse...").
 
 ### Dificuldades Encontradas
-* (Exemplo: "Dificuldade em limpar dados categóricos que estavam despadronizados" ou "Limitação de memória do cluster Community ao gerar gráficos pesados").
+* Os dados disponíveis possuiam uma boa qualidade, o que não gerou problemas, mas acredita-se que a baixa amostragem de dados e a falta de atributos prejudicaria na geração de um modelo, caso fosse necessário.
 
 ### Trabalhos Futuros
-* Expandir a análise cruzando com dados demográficos (idade, localização) se disponíveis.
-* Implementar um modelo de Machine Learning (Regressão) para prever o nível de felicidade com base nos hábitos digitais.
+* Expandir a análise cruzando com dados demográficos (idade, localização, felicidade, estresse e tempo de tela) se disponíveis.
+* Expandir a análise cruzando com dados do poder aquisitivo (idade, renda, tempo de telas, estresse e felicidade) se disponíveis.
+* Expandir a análise cruzando com dados do estádo civil (idade, estado civil, tempo de telas) se disponíveis.
+* Implementar um modelo de Machine Learning (Regressão) para prever o nível de felicidade com base nos hábitos digitais e o tipo de plataforma.
 
 ---
