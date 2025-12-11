@@ -37,7 +37,7 @@ OBS: Minha esposa vive me incomodando por ficar usando celular antes de dormir. 
 ### Processo de Coleta (Databricks)
 1.  **Download:** O arquivo CSV foi baixado da fonte original.
 2.  **Upload:** O arquivo foi carregado para o DBFS (Databricks File System) utilizando a interface de upload do Databricks Community Edition.
-3.  **Caminho no DBFS:** `/FileStore/tables/social_media_mental_health.csv` (Exemplo).
+3.  **Caminho no DBFS:** `workspace.default.mental_health_and_social_media_balance_dataset` 
 
 ---
 
@@ -51,8 +51,8 @@ Para este MVP, utilizaremos uma arquitetura de **Data Lake** seguindo o padrão 
 2.  **Camada Silver (Cleaned/Conformed):**
     * Tratamento de nulos.
     * Renomeação de colunas (tradução para PT-BR ou padronização `snake_case`).
-    * Conversão de tipos de dados (String para Decimal/Integer).
-3.  **Camada Gold (Aggregated/Business Level):** Tabela analítica final pronta para responder às perguntas de negócio (ex: `analise_bem_estar_social`).
+3.  **Camada Gold (Aggregated/Business Level):** Tabela analítica final pronta para responder às perguntas de negócio com dados que serão plotados em um "BI" simulado.
+
 
 ### Catálogo de Dados (Dicionário)
 
@@ -71,7 +71,7 @@ Para este MVP, utilizaremos uma arquitetura de **Data Lake** seguindo o padrão 
 | `Happiness_Index` | `indice_felicidade` | Decimal | Índice subjetivo de felicidade e bem-estar geral em uma escala. | 1.0 a 10.0 (onde 10 é muito feliz). |
 
 ### Linhagem dos Dados
-* **Origem:** Kaggle CSV.
+* **Origem:** Kaggle -> CSV.
 * **Processo:** `CSV` -> `DataFrame Spark (Leitura)` -> `Tabela Delta Bronze` -> `Limpeza/Tratamento` -> `Tabela Delta Silver` -> `Análise/Correlação` -> `Tabela Delta Gold`.
 
 ---
@@ -82,12 +82,14 @@ O processo de ETL será realizado utilizando **PySpark** no Databricks.
 
 ### Etapas do Pipeline:
 1.  **Extração:** Leitura do arquivo CSV do DBFS com inferência de schema.
-2.  **Carga Bronze:** Gravação do DataFrame bruto em formato `delta` no caminho `/dbfs/mnt/bronze/social_health`.
-3.  **Transformação (Bronze -> Silver):**
+2.  **Carga Bronze:** Gravação do DataFrame bruto em formato `delta` no caminho `workspace.default.mental_health_and_social_media_balance_dataset`.
+3.  **Transformação (Bronze -> Silver):** no caminho `workspace.default.silver_social_media_health`.
     * Remoção de registros duplicados.
     * Tratamento de *outliers* (ex: tempo de tela > 24h).
     * Padronização dos nomes das colunas.
-4.  **Carga Silver:** Gravação dos dados tratados em formato `delta` no caminho `/dbfs/mnt/silver/social_health`.
+4.  **Carga Silver:** Gravação dos dados tratados no caminho `workspace.default.gold_analise_bem_estar`.
+
+![Print do Databricks](./Images/Print da base de dados.png)
 
 ---
 
@@ -97,27 +99,110 @@ O processo de ETL será realizado utilizando **PySpark** no Databricks.
 Verificação da integridade dos dados antes de responder às perguntas de negócio. Serão analisados:
 * **Contagem de Nulos:** Verificar se há campos vazios críticos (ex: Felicidade ou Tempo de Tela).
 * **Verificação de Range:** Garantir que `tempo_tela` não seja negativo ou maior que 24h. Garantir que índices de 0 a 10 estejam dentro do limite.
-* **Cardinalidade:** Verificar se os campos categóricos (como frequência de exercício) possuem valores padronizados.
 
-### B. Solução do Problema (Insights)
-Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pandas nas agregações) para gerar visualizações.
+
+
+### B. Respostas para as perguntas de Negócio 
+
+1.  **Redes Sociais x Estresse:** Existe uma correlação entre o tempo gasto em redes sociais e o aumento do nível de estresse? 
+
+  **Resposta:** Conforme o item 5.1 do notebook, identificou-se uma correlação de aproximadamente 0.74 entre redes sociais e o aumento do nível de estresse.
+  
+   Conforme o gráfico "Média de Estresse por Categoria de Uso de Tela e Gênero" identificou-se que indepentende do gênero, em média quanto mais tempo você usa telas, maior o seu nível de estresse.
+   ![Média de Estresse por Categoria de Uso de Tela e Gênero](./Images/estresse categoria de uso e genero.png)
+
+  Já com o gráfico "Média de Estresse por Plataforma de Rede Social e Gênero" identificamos que plataforma que negativamente se destaca em média é o "Instagram", independênte do gênero. 
+  ![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/estresse plataforma e genero.png)
+
+  Esse resultado intrigou o desenvolvedor desse trabalho pois, por ser um usuário do Instagram, entendeu-se que precisa reduzir/eliminar o acesso à essa plataforma, mas fica a reflexão:
+  
+  O uso é algo que gera estresse ou o uso é uma fuga para problemas e estes são os geradores de estresse? Será que esse resultado é um reflexo de uma doença silenciosa que está dominando a sociedade? Para responder isso, o desenvolvedor entende que são necessários mais dados e atributos, como: poder aquisitivo, região, formação, emprego, estado civil, se está estudando, entre outros. 
+
+2.  **Redes Sociais x Felicidade:** O uso intensivo de plataformas digitais afeta o índice de felicidade reportado?
+
+**Resposta:** Conforme o item 5.2  do notebook há uma correlação de -0.70, ou seja, em média quando maior o uso de telas, menos a felicidade. 
+
+Quando analisamos o gráfico "Comparativo: Estresse vs Felicidade por Categoria de Uso" percebe-se que em média as pessoas que usam menos telas são mais felizes e menos estressadas. 
+![Comparativo: Estresse vs Felicidade por Categoria de Uso](./Images/estresse felicidade categoria de uso.png)
+
+Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais telas ela fica mais estressada e por conseguinte ela fica menos feliz? Ou se as pessoas que usam mais telas são menos felizes e isso gera um estresse maior. Independente da resposta, fica claro que o uso excessivo de telas não faz bem, mas entender o agente causador auxilia na resolução do problema. No entendimento do desenvolvedor faltam dados para saber qual o causador, pois a pessoa pode estar infeliz por ter perdido um parente ou ela pode estar estressada por conta de demandas no trabalho. 
+
+3.  **Redes Sociais x Sono:** O tempo de tela diário impacta a qualidade do sono?
+
+**Resposta:** Conforme o item 5.3  do notebook há uma correlação entre o tempo médio de uso de telas e a qualidade do sono de -0.76, ou seja, quanto maior o tempo de telas menor a qualidade do sono. 
+
+
+4.  **Hábitos Saudáveis:** Qual a relação entre a frequência de exercícios físicos, qualidade do sono e a felicidade geral?
+
+**Resposta:** Conforme o item 5.4  do notebook avaliando a tabela percebe-se que em média não há uma relação direta entre o aumento da frequência de exercícios físicos e a qualidade do sono e a felicidade. Se analisarmos apenas os maiores valores de frequência de exercícios físicos, percebe-se que neles se concentram os maiores valores de qualidade de sono e de felicidade, porém, o argumento do desenvolvedor se sustentam em duas hipóteses:
+
+- A amostragem de pessoas que praticam uma elevada frequência de exercícios físicos é baixa, logo imagina-se que são pessoas que possuem alto poder aquisitivo e por conseguinte podem ter outros fatores que influenciam tanto quanto os exercicíos. 
+
+- Pessoas que não praticam exercícios são mais felizes e possuem maior média de sono que as pessoas que praticam duas vezes. 
+
+*Item 5.4 citada*
+| freq_exercicio | media_sono | media_felicidade | total_pessoas |
+| :--- | :--- | :--- | :--- |
+| 0 | 6.33 | 8.53 | 43 |
+| 1 | 6.44 | 8.43 | 91 |
+| 2 | 6.2 | 8.25 | 132 |
+| 3 | 6.19 | 8.21 | 117 |
+| 4 | 6.24 | 8.41 | 75 |
+| 5 | 6.67 | 8.78 | 36 |
+| 6 | 7 | 9.5 | 4 |
+| 7 | 8 | 10 | 2 |
+
+5.  **Outras conclusões:** 
+
+Complementando essa análise, cita-se o gráfico 
+"Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)", nele percebe-se que há uma relação de que quando maior o estresse, menor a felicidade e pior a qualidade do sono. Já quando avalia-se o gráfico "Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)" que demonstra que não há uma relação direta do exercício, estresse e felicidade. 
+![Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)](./Images/estresse felicidade qualidade do sono.png)
+
+![Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)](./Images/estresse felicidade e exercicio.png)
+
+Já no gráfico "Felicidade por Plataforma e Intensidade de Uso", percebe-se que independente da plataforma, em média quanto maior o uso, mais prejudicial é para a felicidade. 
+![Felicidade por Plataforma e Intensidade de Uso](./Images/Felicidade por plataforma e intensidade de uso.png)
+
+Com os dados do item 5.5, tentou-se avaliar se alguma geração(exemplo: X, Y ou Z) possuia algum destaque em relação a felicidade ou se alguma faixa de idade que pode ser casada teria alguma relação com o uso de telas, mas não dá para afirmar isso pois há algumas variações que parecem ser aleatórias. Imagina-se que isso ocorre pois faltam atributos para classificarmos melhor os grupos. 
+
+![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/Média de estresse por plataforma de rede.png)
+
+### C. Análise dos dados complementares
+Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pandas nas agregações) para gerar visualizações genéricas e entender o comportamento dos dados 
 
 1.  **Correlação Geral (Heatmap):** Matriz de correlação de Pearson entre todas as variáveis numéricas (Tempo de tela, Sono, Estresse, Felicidade).
-    * *Objetivo:* Responder de uma só vez quais variáveis estão mais fortemente ligadas.
-2.  **Scatter Plot com Linha de Tendência:** `Tempo de Tela` (eixo X) vs `Nível de Estresse` (eixo Y).
-    * *Resposta à Pergunta 1.*
-3.  **Boxplot:** `Frequência de Exercício` vs `Índice de Felicidade`.
-    * *Resposta à Pergunta 4 (parcial).*
-4.  **Análise de Distribuição:** Histogramas para entender o perfil da amostra (ex: a maioria das pessoas dorme pouco ou muito?).
+    * *Objetivo:* Entender de uma só vez quais variáveis estão mais fortemente ligadas.
 
+![Heatmap](./Images/Heatmap.png)
 
+    * *Análise:* A imagem demonstra o que já foi identificado nos dados, mas de uma maneira mais abrangente.
+
+2.  **Scatter Plot com Linha de Tendência:** `Tempo de Tela` (eixo X) vs `Atributos distintos` (eixo Y).
+    * *Objetivo:* Entender relações lineares entre o tempo de tela e outros atributos .
+
+![Tempo de tela](./Images/Impacto do tempo de tela.png)
+
+    * *Análise:* A imagem demonstra que em média há uma relação linear, mas aparentemente há um desvio que pode ser gerado por um outro atributo.
+
+3.  **Análise de Distribuição:** Histogramas para entender o perfil dos atributos.
+    * *Objetivo:* Conhecer as distribuições dos atributos.
+
+![Distribuição](./Images/Distribuicao.png)
+
+    * *Análise:* A imagem demonstra que aparentemente a distribuição de idade é aleatória, mas o efeito na distribuição de tempo de tela, níveis de stresse e qualidade de sono aparentemente são semelhantes a uma curva normal. A distribuição dos exercícios é semelhante a uma curva logarítmica e a da felicidade é uma crescente. Há algumas lacunas nas distribuições que provavelmente são geradas por conta da baixa quantidade de dados da base, mas por ser tratar de uma análise didática não haverá problemas. Caso os dados sejam utilizados para análises reais deve-se levar em consideração a incerteza da amostra em relação a população, ou seja, os resultados terão uma acurácia atribuida a sua distribuição. Caso alguém siga nesse caminho recomenta-se utilizar os valores da tabela de T-Student para as curvas normais.
 
 ---
+![Print do Databricks2](./Images/Print do uso da base gold.png)
 
+![Print do Databricks3](./Images/Print das queries.png)
+
+![Print do Databricks4](./Images/Print de parte do notebook.png)
+---
 ## 6. Autoavaliação e Conclusão
 
-### Discussão dos Resultados
-* (Espaço reservado para descrever se as hipóteses foram confirmadas. Ex: "Foi observado uma correlação forte de 0.7 entre tempo de tela e estresse...").
+### Conclusão Final dos Resultados
+* Entende-se que o uso em excesso de telas poderá gerar estresse e reduzir a felicidade. Esse problema não escolhe gênero nem idade, logo estamos falando de uma pandemia silenciosa que prejudica cada vez mais a saúde mental das pessoas. Evite usa-las.  
+
 
 ### Dificuldades Encontradas
 * Os dados disponíveis possuiam uma boa qualidade, o que não gerou problemas, mas acredita-se que a baixa amostragem de dados e a falta de atributos prejudicaria na geração de um modelo, caso fosse necessário.
