@@ -138,7 +138,7 @@ Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais tel
 
 - A amostragem de pessoas que praticam uma elevada frequência de exercícios físicos é baixa, logo imagina-se que são pessoas que possuem alto poder aquisitivo e por conseguinte podem ter outros fatores que influenciam tanto quanto os exercicíos. 
 
-- Pessoas que não praticam exercícios são mais felizes e possuem maior média de sono que as pessoas que praticam duas vezes. 
+- Pessoas que não praticam exercícios são em média mais felizes e possuem maior média de sono que as pessoas que praticam duas vezes. 
 
 *Item 5.4 citada*
 | freq_exercicio | media_sono | media_felicidade | total_pessoas |
@@ -155,7 +155,7 @@ Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais tel
 5.  **Outras conclusões:** 
 
 Complementando essa análise, cita-se o gráfico 
-"Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)", nele percebe-se que há uma relação de que quando maior o estresse, menor a felicidade e pior a qualidade do sono. Já quando avalia-se o gráfico "Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)" que demonstra que não há uma relação direta do exercício, estresse e felicidade. 
+"Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)", nele percebe-se que há uma relação de que quando maior o estresse, menor a felicidade e pior a qualidade do sono. Já quando avalia-se o gráfico "Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)" que demonstra que não há uma relação direta do exercício, estresse e felicidade, pois há diversos casos que possuem médias de estresse e de exercício elevadas. 
 ![Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)](./Images/estresse felicidade qualidade do sono.png)
 
 ![Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)](./Images/estresse felicidade e exercicio.png)
@@ -165,7 +165,7 @@ Já no gráfico "Felicidade por Plataforma e Intensidade de Uso", percebe-se que
 
 Com os dados do item 5.5, tentou-se avaliar se alguma geração(exemplo: X, Y ou Z) possuia algum destaque em relação a felicidade ou se alguma faixa de idade que pode ser casada teria alguma relação com o uso de telas, mas não dá para afirmar isso pois há algumas variações que parecem ser aleatórias. Imagina-se que isso ocorre pois faltam atributos para classificarmos melhor os grupos. 
 
-![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/Média de estresse por plataforma de rede.png)
+![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/sono felicidade exercicio.png)
 
 ### C. Análise dos dados complementares
 Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pandas nas agregações) para gerar visualizações genéricas e entender o comportamento dos dados 
@@ -175,21 +175,21 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 
 ![Heatmap](./Images/Heatmap.png)
 
-    * *Análise:* A imagem demonstra o que já foi identificado nos dados, mas de uma maneira mais abrangente.
+**Análise:** A imagem demonstra o que já foi identificado nos dados, mas de uma maneira mais abrangente.
 
 2.  **Scatter Plot com Linha de Tendência:** `Tempo de Tela` (eixo X) vs `Atributos distintos` (eixo Y).
     * *Objetivo:* Entender relações lineares entre o tempo de tela e outros atributos .
 
 ![Tempo de tela](./Images/Impacto do tempo de tela.png)
 
-    * *Análise:* A imagem demonstra que em média há uma relação linear, mas aparentemente há um desvio que pode ser gerado por um outro atributo.
+**Análise:** A imagem demonstra que em média há uma relação linear, mas aparentemente há um desvio que pode ser gerado por um outro atributo.
 
 3.  **Análise de Distribuição:** Histogramas para entender o perfil dos atributos.
     * *Objetivo:* Conhecer as distribuições dos atributos.
 
 ![Distribuição](./Images/Distribuicao.png)
 
-    * *Análise:* A imagem demonstra que aparentemente a distribuição de idade é aleatória, mas o efeito na distribuição de tempo de tela, níveis de stresse e qualidade de sono aparentemente são semelhantes a uma curva normal. A distribuição dos exercícios é semelhante a uma curva logarítmica e a da felicidade é uma crescente. Há algumas lacunas nas distribuições que provavelmente são geradas por conta da baixa quantidade de dados da base, mas por ser tratar de uma análise didática não haverá problemas. Caso os dados sejam utilizados para análises reais deve-se levar em consideração a incerteza da amostra em relação a população, ou seja, os resultados terão uma acurácia atribuida a sua distribuição. Caso alguém siga nesse caminho recomenta-se utilizar os valores da tabela de T-Student para as curvas normais.
+**Análise:** A imagem demonstra que aparentemente a distribuição de idade é aleatória, mas o efeito na distribuição de tempo de tela, níveis de estresse e qualidade de sono aparentemente são semelhantes a uma curva normal. A distribuição dos exercícios é semelhante a uma curva logarítmica e a da felicidade é uma crescente. Há algumas lacunas nas distribuições que provavelmente são geradas por conta da baixa quantidade de dados da base, mas por ser tratar de uma análise didática não haverá problemas. Caso os dados sejam utilizados para análises reais deve-se levar em consideração a incerteza da amostra em relação a população, ou seja, os resultados terão uma acurácia atribuida a sua distribuição. Caso alguém siga nesse caminho recomenta-se utilizar os valores da tabela de T-Student para as curvas normais.
 
 ---
 ![Print do Databricks2](./Images/Print do uso da base gold.png)
@@ -205,7 +205,7 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 
 
 ### Dificuldades Encontradas
-* Os dados disponíveis possuiam uma boa qualidade, o que não gerou problemas, mas acredita-se que a baixa amostragem de dados e a falta de atributos prejudicaria na geração de um modelo, caso fosse necessário.
+* Os dados disponíveis possuiam uma boa qualidade, o que não gerou problemas, mas acredita-se que a baixa amostragem de dados e a falta de atributos prejudicaria na geração de um modelo, caso fosse necessário. Para as hipóses apresentadas, entende-se que o aluno atingiu o objetivo, mas acredita-se que a maior barreira encontrada está no fato do aluno ser usuário da plataforma. Isso fez com que houvesse uma motivação para entender o real impacto do uso de plataformas. 
 
 ### Trabalhos Futuros
 * Expandir a análise cruzando com dados demográficos (idade, localização, felicidade, estresse e tempo de tela) se disponíveis.
