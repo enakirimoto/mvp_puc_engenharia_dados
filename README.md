@@ -89,6 +89,7 @@ O processo de ETL será realizado utilizando **PySpark** no Databricks.
     * Padronização dos nomes das colunas.
 4.  **Carga Silver:** Gravação dos dados tratados no caminho `workspace.default.gold_analise_bem_estar`.
 
+*Imagem de comprovação*
 ![Print do Databricks](./Images/Print da base de dados.png)
 
 ---
@@ -103,20 +104,21 @@ Verificação da integridade dos dados antes de responder às perguntas de negó
 
 
 ### B. Respostas para as perguntas de Negócio 
+As respostas citam o item do notebook disponível no [link](https://github.com/enakirimoto/mvp_puc_engenharia_dados/blob/main/Notebook%20de%20an%C3%A1lise%20de%20dados%20-%20Publico.ipynb)
 
 1.  **Redes Sociais x Estresse:** Existe uma correlação entre o tempo gasto em redes sociais e o aumento do nível de estresse? 
 
-  **Resposta:** Conforme o item 5.1 do notebook, identificou-se uma correlação de aproximadamente 0.74 entre redes sociais e o aumento do nível de estresse.
+  **Resposta:** Conforme o item 5.1 do notebook, identificou-se uma correlação de aproximadamente 0.74 entre redes sociais e o aumento do nível de estresse, ou seja, quando maior o uso de telas, maior o estresse.
   
-   Conforme o gráfico "Média de Estresse por Categoria de Uso de Tela e Gênero" identificou-se que indepentende do gênero, em média quanto mais tempo você usa telas, maior o seu nível de estresse.
+   Conforme o gráfico "Média de Estresse por Categoria de Uso de Tela e Gênero" identificou-se que independende do gênero, em média quanto mais tempo você usa telas, maior o seu nível de estresse.
    ![Média de Estresse por Categoria de Uso de Tela e Gênero](./Images/estresse categoria de uso e genero.png)
 
-  Já com o gráfico "Média de Estresse por Plataforma de Rede Social e Gênero" identificamos que plataforma que negativamente se destaca em média é o "Instagram", independênte do gênero. 
+  Já com o gráfico "Média de Estresse por Plataforma de Rede Social e Gênero" identificamos que plataforma que negativamente se destaca em média é o "Instagram", independente do gênero. 
   ![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/estresse plataforma e genero.png)
 
   Esse resultado intrigou o desenvolvedor desse trabalho pois, por ser um usuário do Instagram, entendeu-se que precisa reduzir/eliminar o acesso à essa plataforma, mas fica a reflexão:
   
-  O uso é algo que gera estresse ou o uso é uma fuga para problemas e estes são os geradores de estresse? Será que esse resultado é um reflexo de uma doença silenciosa que está dominando a sociedade? Para responder isso, o desenvolvedor entende que são necessários mais dados e atributos, como: poder aquisitivo, região, formação, emprego, estado civil, se está estudando, entre outros. 
+  O uso é algo que gera estresse ou é uma fuga para problemas, sendo estes os verdadeiros geradores de estresse? Será que esse resultado é um reflexo de uma doença silenciosa que está dominando a sociedade? Para responder isso, o desenvolvedor entende que são necessários mais dados e atributos, como: poder aquisitivo, região, formação, emprego, estado civil, se está estudando, entre outros. 
 
 2.  **Redes Sociais x Felicidade:** O uso intensivo de plataformas digitais afeta o índice de felicidade reportado?
 
@@ -125,7 +127,7 @@ Verificação da integridade dos dados antes de responder às perguntas de negó
 Quando analisamos o gráfico "Comparativo: Estresse vs Felicidade por Categoria de Uso" percebe-se que em média as pessoas que usam menos telas são mais felizes e menos estressadas. 
 ![Comparativo: Estresse vs Felicidade por Categoria de Uso](./Images/estresse felicidade categoria de uso.png)
 
-Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais telas ela fica mais estressada e por conseguinte ela fica menos feliz? Ou se as pessoas que usam mais telas são menos felizes e isso gera um estresse maior. Independente da resposta, fica claro que o uso excessivo de telas não faz bem, mas entender o agente causador auxilia na resolução do problema. No entendimento do desenvolvedor faltam dados para saber qual o causador, pois a pessoa pode estar infeliz por ter perdido um parente ou ela pode estar estressada por conta de demandas no trabalho. 
+Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais telas ela fica mais estressada e por conseguinte, ela fica menos feliz? Ou se as pessoas que usam mais telas são menos felizes e isso gera um estresse maior. Independente da resposta, fica claro que o uso excessivo de telas não faz bem, mas entender o agente causador auxilia na resolução do problema. No entendimento do desenvolvedor faltam dados para saber qual o causador, pois a pessoa pode estar infeliz por ter perdido um parente ou ela pode estar estressada por conta de demandas no trabalho. 
 
 3.  **Redes Sociais x Sono:** O tempo de tela diário impacta a qualidade do sono?
 
@@ -163,7 +165,7 @@ Complementando essa análise, cita-se o gráfico
 Já no gráfico "Felicidade por Plataforma e Intensidade de Uso", percebe-se que independente da plataforma, em média quanto maior o uso, mais prejudicial é para a felicidade. 
 ![Felicidade por Plataforma e Intensidade de Uso](./Images/Felicidade por plataforma e intensidade de uso.png)
 
-Com os dados do item 5.5, tentou-se avaliar se alguma geração(exemplo: X, Y ou Z) possuia algum destaque em relação a felicidade ou se alguma faixa de idade que pode ser casada teria alguma relação com o uso de telas, mas não dá para afirmar isso pois há algumas variações que parecem ser aleatórias. Imagina-se que isso ocorre pois faltam atributos para classificarmos melhor os grupos. 
+Com os dados do gráfico Relação Multivariada: Sono vs Felicidade(item 5.5), tentou-se avaliar se alguma geração(exemplo: X, Y ou Z) possuia algum destaque em relação a felicidade ou se alguma faixa de idade que pode ser casada teria alguma relação com o uso de telas, mas não dá para afirmar isso pois há algumas variações que parecem ser aleatórias. Imagina-se que isso ocorre pois faltam atributos para classificarmos melhor os grupos. 
 
 ![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/sono felicidade exercicio.png)
 
@@ -189,9 +191,10 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 
 ![Distribuição](./Images/Distribuicao.png)
 
-**Análise:** A imagem demonstra que aparentemente a distribuição de idade é aleatória, mas o efeito na distribuição de tempo de tela, níveis de estresse e qualidade de sono aparentemente são semelhantes a uma curva normal. A distribuição dos exercícios é semelhante a uma curva logarítmica e a da felicidade é uma crescente. Há algumas lacunas nas distribuições que provavelmente são geradas por conta da baixa quantidade de dados da base, mas por ser tratar de uma análise didática não haverá problemas. Caso os dados sejam utilizados para análises reais deve-se levar em consideração a incerteza da amostra em relação a população, ou seja, os resultados terão uma acurácia atribuida a sua distribuição. Caso alguém siga nesse caminho recomenta-se utilizar os valores da tabela de T-Student para as curvas normais.
+**Análise:** A imagem demonstra que aparentemente a distribuição de idade é aleatória, mas o efeito na distribuição de tempo de tela, níveis de estresse e qualidade de sono aparentemente são semelhantes a uma curva normal. A distribuição dos exercícios é semelhante a uma curva logarítmica e a da felicidade é uma crescente. Há algumas lacunas nas distribuições que provavelmente são geradas por conta da baixa quantidade de dados da base, mas por ser tratar de uma análise didática, não haverá problemas. Caso os dados sejam utilizados para análises reais deve-se levar em consideração a incerteza da amostra em relação a população, ou seja, os resultados terão uma acurácia atribuida a sua distribuição. Caso alguém siga nesse caminho recomenda-se utilizar os valores da tabela de T-Student para as curvas normais.
 
 ---
+*Imagem de comprovação*
 ![Print do Databricks2](./Images/Print do uso da base gold.png)
 
 ![Print do Databricks3](./Images/Print das queries.png)
@@ -204,13 +207,13 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 * Entende-se que o uso em excesso de telas poderá gerar estresse e reduzir a felicidade. Esse problema não escolhe gênero nem idade, logo estamos falando de uma pandemia silenciosa que prejudica cada vez mais a saúde mental das pessoas. Evite usa-las.  
 
 
-### Dificuldades Encontradas
-* Os dados disponíveis possuiam uma boa qualidade, o que não gerou problemas, mas acredita-se que a baixa amostragem de dados e a falta de atributos prejudicaria na geração de um modelo, caso fosse necessário. Para as hipóses apresentadas, entende-se que o aluno atingiu o objetivo, mas acredita-se que a maior barreira encontrada está no fato do aluno ser usuário da plataforma. Isso fez com que houvesse uma motivação para entender o real impacto do uso de plataformas. 
+### Dificuldades Encontradas e Autoavaliação
+* Os dados disponíveis possuiam uma boa qualidade, o que não gerou problemas, mas acredita-se que a baixa amostragem de dados e a falta de atributos prejudicaria na geração de um modelo, caso fosse necessário. Para as hipóses apresentadas, entende-se que o aluno atingiu o objetivo, mas acredita-se que a maior barreira encontrada está no fato de o aluno ser usuário da plataforma "Instagram". Isso fez com que houvesse uma motivação para entender o real impacto do uso dessas plataformas.
 
 ### Trabalhos Futuros
-* Expandir a análise cruzando com dados demográficos (idade, localização, felicidade, estresse e tempo de tela) se disponíveis.
-* Expandir a análise cruzando com dados do poder aquisitivo (idade, renda, tempo de telas, estresse e felicidade) se disponíveis.
-* Expandir a análise cruzando com dados do estádo civil (idade, estado civil, tempo de telas) se disponíveis.
+* Expandir a análise cruzando com dados demográficos para identificar padrões regionais (idade, localização, felicidade, estresse e tempo de tela) se disponíveis.
+* Expandir a análise cruzando com dados do poder aquisitivo para identificar padrões de classes(idade, renda, tempo de telas, estresse e felicidade) se disponíveis.
+* Expandir a análise cruzando com dados do estado civil para identificar se há uma correlação familiar(idade, estado civil, tempo de telas) se disponíveis.
 * Implementar um modelo de Machine Learning (Regressão) para prever o nível de felicidade com base nos hábitos digitais e o tipo de plataforma.
 
 ---
