@@ -7,7 +7,7 @@
 
 **Matricula:** 4052025000088
 
-**Disciplina:** Sprint: Engenharia de Dados 2025_02 
+**Disciplina:** Sprint: Engenharia de Dados 2025_02  
 
 
 ## 1. Objetivo do Trabalho
