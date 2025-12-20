@@ -90,7 +90,7 @@ O processo de ETL será realizado utilizando **PySpark** no Databricks.
 4.  **Carga Silver:** Gravação dos dados tratados no caminho `workspace.default.gold_analise_bem_estar`.
 
 *Imagem de comprovação*
-![Print do Databricks](./Images/Print da base de dados.png)
+![Print do Databricks](./Images/Print%20da%20base%20de%20dados.png)
 
 ---
 
@@ -114,7 +114,7 @@ As respostas citam o item do notebook disponível no [link](https://github.com/e
    ![Média de Estresse por Categoria de Uso de Tela e Gênero](./Images/estresse categoria de uso e genero.png)
 
   Já com o gráfico "Média de Estresse por Plataforma de Rede Social e Gênero" identificamos que plataforma que negativamente se destaca em média é o "Instagram", independente do gênero. 
-  ![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/estresse plataforma e genero.png)
+  ![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/estresse%20plataforma%20e%20genero.png)
 
   Esse resultado intrigou o desenvolvedor desse trabalho pois, por ser um usuário do Instagram, entendeu-se que precisa reduzir/eliminar o acesso à essa plataforma, mas fica a reflexão:
   
@@ -125,7 +125,7 @@ As respostas citam o item do notebook disponível no [link](https://github.com/e
 **Resposta:** Conforme o item 5.2  do notebook há uma correlação de -0.70, ou seja, em média quando maior o uso de telas, menos a felicidade. 
 
 Quando analisamos o gráfico "Comparativo: Estresse vs Felicidade por Categoria de Uso" percebe-se que em média as pessoas que usam menos telas são mais felizes e menos estressadas. 
-![Comparativo: Estresse vs Felicidade por Categoria de Uso](./Images/estresse felicidade categoria de uso.png)
+![Comparativo: Estresse vs Felicidade por Categoria de Uso](./Images/estresse%20felicidade%20categoria%20de%20uso.png)
 
 Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais telas ela fica mais estressada e por conseguinte, ela fica menos feliz? Ou se as pessoas que usam mais telas são menos felizes e isso gera um estresse maior. Independente da resposta, fica claro que o uso excessivo de telas não faz bem, mas entender o agente causador auxilia na resolução do problema. No entendimento do desenvolvedor faltam dados para saber qual o causador, pois a pessoa pode estar infeliz por ter perdido um parente ou ela pode estar estressada por conta de demandas no trabalho. 
 
@@ -158,16 +158,16 @@ Fica a dúvida se há uma causa raiz, como por exemplo, se a pessoa usa mais tel
 
 Complementando essa análise, cita-se o gráfico 
 "Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)", nele percebe-se que há uma relação de que quando maior o estresse, menor a felicidade e pior a qualidade do sono. Já quando avalia-se o gráfico "Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)" que demonstra que não há uma relação direta do exercício, estresse e felicidade, pois há diversos casos que possuem médias de estresse e de exercício elevadas. 
-![Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)](./Images/estresse felicidade qualidade do sono.png)
+![Relação Multivariada: Estresse vs Felicidade (Tamanho = Qualidade do Sono)](./Images/estresse%20felicidade%20qualidade%20do%20sono.png)
 
-![Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)](./Images/estresse felicidade e exercicio.png)
+![Relação Multivariada: Estresse vs Felicidade (Tamanho = Exercicio)](./Images/estresse%20felicidade%20e%20exercicio.png)
 
 Já no gráfico "Felicidade por Plataforma e Intensidade de Uso", percebe-se que independente da plataforma, em média quanto maior o uso, mais prejudicial é para a felicidade. 
-![Felicidade por Plataforma e Intensidade de Uso](./Images/Felicidade por plataforma e intensidade de uso.png)
+![Felicidade por Plataforma e Intensidade de Uso](./Images/Felicidade%20por%20plataforma%20e%20intensidade%20de%20uso.png)
 
 Com os dados do gráfico Relação Multivariada: Sono vs Felicidade(item 5.5), tentou-se avaliar se alguma geração(exemplo: X, Y ou Z) possuia algum destaque em relação a felicidade ou se alguma faixa de idade que pode ser casada teria alguma relação com o uso de telas, mas não dá para afirmar isso pois há algumas variações que parecem ser aleatórias. Imagina-se que isso ocorre pois faltam atributos para classificarmos melhor os grupos. 
 
-![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/sono felicidade exercicio.png)
+![Média de Estresse por Plataforma de Rede Social e Gênero](./Images/sono%20felicidade%20exercicio.png)
 
 ### C. Análise dos dados complementares
 Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pandas nas agregações) para gerar visualizações genéricas e entender o comportamento dos dados 
@@ -182,7 +182,7 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 2.  **Scatter Plot com Linha de Tendência:** `Tempo de Tela` (eixo X) vs `Atributos distintos` (eixo Y).
     * *Objetivo:* Entender relações lineares entre o tempo de tela e outros atributos .
 
-![Tempo de tela](./Images/Impacto do tempo de tela.png)
+![Tempo de tela](./Images/Impacto%20do%20tempo%20de%20tela.png)
 
 **Análise:** A imagem demonstra que em média há uma relação linear, mas aparentemente há um desvio que pode ser gerado por um outro atributo.
 
@@ -195,11 +195,11 @@ Utilizaremos **Pandas, Matplotlib/Seaborn** (após converter o Spark DF para Pan
 
 ---
 *Imagem de comprovação*
-![Print do Databricks2](./Images/Print do uso da base gold.png)
+![Print do Databricks2](./Images/Print%20do%20uso%20da%20base%20gold.png)
 
-![Print do Databricks3](./Images/Print das queries.png)
+![Print do Databricks3](./Images/Print%20das%20queries.png)
 
-![Print do Databricks4](./Images/Print de parte do notebook.png)
+![Print do Databricks4](./Images/Print%20de%20parte%20do%20notebook.png)
 ---
 ## 6. Autoavaliação e Conclusão
 
